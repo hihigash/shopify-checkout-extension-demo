@@ -1,50 +1,53 @@
 import React from 'react';
 import {
   reactExtension,
-  Banner,
   BlockStack,
   Text,
   InlineStack,
-  Icon,
-  useCartLines,
+  Link,
+  useShop,
 } from '@shopify/ui-extensions-react/checkout';
 
-// サンクスページ用のエクステンション
 export default reactExtension(
   'purchase.thank-you.block.render',
   () => <ThankYouExtension />
 );
 
 function ThankYouExtension() {
-  const cartLines = useCartLines();
+  const shop = useShop();
+  
+  // 共有用のテキストとストアURL
+  const shareText = `${shop.name}で素敵な商品を購入しました！`;
+  const storeUrl = `https://${shop.myshopifyDomain}`;
+
+  // 各SNSの共有URL
+  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(storeUrl)}`;
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(storeUrl)}`;
+  const lineShareUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(storeUrl)}&text=${encodeURIComponent(shareText)}`;
 
   return (
     <BlockStack spacing="base">
-      <Banner status="success" title="ご注文ありがとうございます！">
-        ご注文を承りました。確認メールをお送りしましたので、ご確認ください。
-      </Banner>
+      <Text size="large" emphasis="bold">
+        購入をシェアしよう！
+      </Text>
+      
+      <Text appearance="subdued">
+        お友達にシェアして、お気に入りの商品を共有しませんか？
+      </Text>
 
-      <BlockStack spacing="tight">
-        <Text size="large" emphasis="bold">
-          次のステップ
-        </Text>
-        <InlineStack spacing="tight" blockAlignment="center">
-          <Icon source="checkmark" />
-          <Text>商品の準備を開始します</Text>
-        </InlineStack>
-        <InlineStack spacing="tight" blockAlignment="center">
-          <Icon source="delivery" />
-          <Text>配送状況はメールでお知らせします</Text>
-        </InlineStack>
-        <InlineStack spacing="tight" blockAlignment="center">
-          <Icon source="customer" />
-          <Text>ご不明な点がございましたら、お気軽にお問い合わせください</Text>
-        </InlineStack>
-      </BlockStack>
-
-      <Banner status="info">
-        商品レビューをお待ちしております。商品到着後、ぜひご感想をお聞かせください。
-      </Banner>
+      <InlineStack spacing="base">
+        <Link to={twitterShareUrl} external>
+          X (Twitter)
+        </Link>
+        
+        <Link to={facebookShareUrl} external>
+          Facebook
+        </Link>
+        
+        <Link to={lineShareUrl} external>
+          LINE
+        </Link>
+      </InlineStack>
     </BlockStack>
   );
 }

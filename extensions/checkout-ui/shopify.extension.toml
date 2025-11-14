@@ -2,12 +2,12 @@ api_version = "2024-10"
 
 [[extensions]]
 type = "ui_extension"
-name = "checkout-ui-extension"
-handle = "checkout-ui-extension"
+name = "thank-you-sns-share"
+handle = "thank-you-sns-share"
 
 [[extensions.targeting]]
-target = "purchase.checkout.block.render"
-module = "./src/Checkout.tsx"
+target = "purchase.thank-you.block.render"
+module = "./src/ThankYouExtension.tsx"
 
 [extensions.capabilities]
 api_access = true
