@@ -1,0 +1,15 @@
+api_version = "2024-10"
+
+[[extensions]]
+type = "ui_extension"
+name = "checkout-ui-extension"
+handle = "checkout-ui-extension"
+
+[[extensions.targeting]]
+target = "purchase.checkout.block.render"
+module = "./src/Checkout.tsx"
+
+[extensions.capabilities]
+api_access = true
+network_access = true
+block_progress = false
